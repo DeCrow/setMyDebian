@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Get user params
+echo "Enter new SSH port (not 22):"
+read param_ssh_port
+echo "Enter new hostname:"
+read param_hostname
+echo "Enter you IP (optional):"
+read param_ip_client
+echo "Enter host IP (optional):"
+read param_ip_host
+
+if [ $param_ip_client == "" ]; then
+$param_ip_client = $SSH_CLIENT
+fi
+
+if [ $param_ip_host == ""]; then
+$param_ip_host = $(hostname -i)
+fi
+
+# Update & upgrade
+apt-get update
+apt-get upgrade
+apt-get dist-upgrade
+
+# Set new SSH port
+sed -i 's/#Port 22/Port $param_ssh_port/g' /etc/ssh/sshd_config
+
+# Disable PING response and IPV6 protocol
+echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_all
+echo "net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf
+echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+sysctl -p
+
+# Setup firewall
+apt install ufw
+sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
+sed -i '/ufw-before-input.*icmp/s/ACCEPT/DROP/g' /etc/ufw/before.rules
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow from $param_ip_client to any
+ufw allow $param_ssh_port
+ufw enable
+
+# Set hostname
+echo "$param_hostname" > /etc/hostname
+echo "127.0.0.1 localhost" > /etc/hosts
+echo "$param_ip_host $param_hostname" >> /etc/hosts
+
+# Set timezone
+timedatectl set-timezone Europe/Moscow
+
+# Install service packages
+apt-get install htop
+
+# Install KNOCKD
+apt install -y knockd
+wget -O /etc/knockd.conf https://raw.githubusercontent.com/DeCrow/secureMy/main/files/knockd.conf
+sed -i 's/ProtectSystem=full/ProtectSystem=true/g' /usr/lib/systemd/system/knockd.service
+echo "[Install]" >> /usr/lib/systemd/system/knockd.service
+echo "WantedBy=multi-user.target" >> /usr/lib/systemd/system/knockd.service
+sed -i 's/START_KNOCKD=0/START_KNOCKD=1/g' /etc/default/knockd
+systemctl daemon-reload
+systemctl enable knockd
+service knockd start
+
+# Reboot
+reboot
