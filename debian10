@@ -5,18 +5,10 @@ echo "Enter new SSH port (not 22):"
 read param_ssh_port
 echo "Enter new hostname:"
 read param_hostname
-echo "Enter you IP (optional):"
+echo "Enter you IP:"
 read param_ip_client
-echo "Enter host IP (optional):"
+echo "Enter host IP:"
 read param_ip_host
-
-if [ $param_ip_client == "" ]; then
-$param_ip_client = $SSH_CLIENT
-fi
-
-if [ $param_ip_host == ""]; then
-$param_ip_host = $(hostname -i)
-fi
 
 # Update & upgrade
 apt-get update
