@@ -34,6 +34,9 @@ ufw allow from $param_ip_client to any
 ufw allow $param_ssh_port
 ufw enable
 
+# Clean MOTD
+echo "" > /etc/motd
+
 # Set hostname
 echo "$param_hostname" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
