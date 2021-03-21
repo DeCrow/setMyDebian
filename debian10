@@ -16,7 +16,7 @@ apt-get upgrade
 apt-get dist-upgrade
 
 # Set new SSH port
-sed -i 's/#Port 22/Port $param_ssh_port/g' /etc/ssh/sshd_config
+sed -i "s/#Port 22/Port $param_ssh_port/g" /etc/ssh/sshd_config
 
 # Disable PING response and IPV6 protocol
 echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_all
