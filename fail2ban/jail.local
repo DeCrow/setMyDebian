@@ -1,6 +1,6 @@
 
-[ssh-ufw]\r\n
-enabled = true\r\n
+[ssh-ufw]
+enabled = true
 filter = sshd
 action = ssh-ufw
 logpath = /var/log/auth.log
