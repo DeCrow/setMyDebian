@@ -5,4 +5,4 @@ filter = sshd
 action = ssh-ufw
 logpath = /var/log/auth.log
 maxretry = 3
-bantime = 600
+bantime = -1
