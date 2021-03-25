@@ -21,6 +21,14 @@ apt install -y curl fail2ban ufw knockd htop
 # Set timezone
 timedatectl set-timezone Europe/Moscow
 
+# Clean MOTD
+echo "" > /etc/motd
+
+# Set hostname
+echo "$param_hostname" > /etc/hostname
+echo "127.0.0.1 localhost" > /etc/hosts
+echo "$param_ip_host $param_hostname" >> /etc/hosts
+
 # Set new SSH port
 sed -i "s/#Port 22/Port $param_ssh_port/g" /etc/ssh/sshd_config
 
@@ -30,14 +38,14 @@ echo "net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf
 echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
 sysctl -p
 
-# Setup fail2ban
+# Configure fail2ban
 cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 curl "https://raw.githubusercontent.com/DeCrow/secureMyDebian/main/fail2ban/%3E%3E%20jail.local" >> /etc/fail2ban/jail.local
 wget -O "/etc/fail2ban/action.d/ssh-ufw.conf" "https://raw.githubusercontent.com/DeCrow/secureMyDebian/main/fail2ban/%3E%20ssh-ufw.conf"
 sed -i 's/enabled = true/enabled = false/g' /etc/fail2ban/jail.d/defaults-debian.conf
 systemctl restart fail2ban
 
-# Setup firewall
+# Configure firewall
 sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 sed -i '/ufw-before-input.*icmp/s/ACCEPT/DROP/g' /etc/ufw/before.rules
 ufw default deny incoming
@@ -45,14 +53,6 @@ ufw default allow outgoing
 ufw allow from $param_ip_client to any
 ufw allow $param_ssh_port/tcp
 ufw enable
-
-# Clean MOTD
-echo "" > /etc/motd
-
-# Set hostname
-echo "$param_hostname" > /etc/hostname
-echo "127.0.0.1 localhost" > /etc/hosts
-echo "$param_ip_host $param_hostname" >> /etc/hosts
 
 # Configure knockd
 wget -O /etc/knockd.conf https://raw.githubusercontent.com/DeCrow/secureMy/main/files/knockd.conf
