@@ -1,4 +1,3 @@
-
 [ssh-ufw]
 enabled = true
 filter = sshd
