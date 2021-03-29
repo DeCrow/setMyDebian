@@ -40,8 +40,8 @@ sysctl -p
 
 # Configure fail2ban
 cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-curl "https://raw.githubusercontent.com/DeCrow/secureMyDebian/main/fail2ban/%3E%3E%20jail.local" >> /etc/fail2ban/jail.local
-wget -O "/etc/fail2ban/action.d/ssh-ufw.conf" "https://raw.githubusercontent.com/DeCrow/secureMyDebian/main/fail2ban/%3E%20ssh-ufw.conf"
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/fail2ban/%3E%3E%20jail.local" >> /etc/fail2ban/jail.local
+wget -O "/etc/fail2ban/action.d/ssh-ufw.conf" "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/fail2ban/%3E%20ssh-ufw.conf"
 sed -i 's/enabled = true/enabled = false/g' /etc/fail2ban/jail.d/defaults-debian.conf
 systemctl restart fail2ban
 
@@ -55,9 +55,9 @@ ufw allow $param_ssh_port/tcp
 ufw enable
 
 # Configure knockd
-wget -O /etc/knockd.conf https://raw.githubusercontent.com/DeCrow/secureMyDebian/main/knockd/%3E%20knockd.conf
+wget -O /etc/knockd.conf https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/%3E%20knockd.conf
 sed -i 's/ProtectSystem=full/ProtectSystem=true/g' /usr/lib/systemd/system/knockd.service
-curl "https://raw.githubusercontent.com/DeCrow/secureMyDebian/main/knockd/%3E%3E%20knockd.service" >> /usr/lib/systemd/system/knockd.service
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/%3E%3E%20knockd.service" >> /usr/lib/systemd/system/knockd.service
 sed -i 's/START_KNOCKD=0/START_KNOCKD=1/g' /etc/default/knockd
 systemctl daemon-reload
 systemctl enable knockd
