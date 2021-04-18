@@ -1,2 +1,18 @@
+[Unit]
+Description=Port-Knock Daemon
+After=network-online.target
+Wants=network-online.target
+Before=sshd.service
+Documentation=man:knockd(1)
+
+[Service]
+EnvironmentFile=-/etc/default/knockd
+ExecStart=/usr/sbin/knockd $KNOCKD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+SuccessExitStatus=0 2 15
+ProtectSystem=true
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN
+
 [Install]
 WantedBy=multi-user.target

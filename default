@@ -61,8 +61,9 @@ ufw enable
 # Configure knockd
 wget -O /etc/knockd.conf 'https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/knockd.conf'
 sed -i 's/ProtectSystem=full/ProtectSystem=true/g' /usr/lib/systemd/system/knockd.service
-curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/knockd.service" >> /usr/lib/systemd/system/knockd.service
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/knockd.service" > /usr/lib/systemd/system/knockd.service
 sed -i 's/START_KNOCKD=0/START_KNOCKD=1/g' /etc/default/knockd
+systemctl enable systemd-networkd-wait-online.service
 systemctl daemon-reload
 systemctl enable knockd
 service knockd start
