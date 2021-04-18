@@ -68,4 +68,11 @@ systemctl enable knockd
 service knockd start
 
 # Reboot
-reboot
+while true; do
+    read -p "It is all OK? Can we reboot? [y|n]: " yn
+    case $yn in
+        [Yy]* ) reboot; break;;
+        [Nn]* ) exit;;
+        * ) echo "It is all OK? Can we reboot? [y|n]: ";;
+    esac
+done
