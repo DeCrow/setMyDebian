@@ -23,7 +23,7 @@ apt install -y curl fail2ban ufw knockd htop
 timedatectl set-timezone Europe/Moscow
 
 # Clean MOTD
-echo "" > /etc/motd
+> /etc/motd
 
 # Set hostname
 echo "$param_hostname" > /etc/hostname
