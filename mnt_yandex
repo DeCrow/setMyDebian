@@ -16,3 +16,13 @@ apt install davfs2
 mkdir "${mnt_folder}"
 echo "https://webdav.yandex.ru ${mnt_folder} davfs user,rw,_netdev 0 0" >> /etc/fstab
 echo "https://webdav.yandex.ru ${param_login} ${param_pass}" >> /etc/davfs2/secrets
+
+# Reboot
+while true; do
+    read -p "It is all OK? Can we reboot? [y|n]: " yn
+    case $yn in
+        [Yy]* ) reboot; break;;
+        [Nn]* ) exit;;
+        * ) echo "It is all OK? Can we reboot? [y|n]: ";;
+    esac
+done
