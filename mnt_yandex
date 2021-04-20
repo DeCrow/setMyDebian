@@ -12,15 +12,7 @@ read param_pass
 mnt_folder="/mnt/${param_mnt_name}"
 
 # Install
-#apt install davfs2
-#mkdir "${mnt_folder}"
-#"https://webdav.yandex.ru ${mnt_folder} davfs rw,users 0 0" >> /etc/fstab
-#"https://webdav.yandex.ru ${param_login} ${param_pass}" >> /etc/davfs2/secrets
-
-# Test
-echo "${param_mnt_name}"
-echo "${param_login}"
-echo "${param_pass}"
-echo "${mnt_folder}"
-echo "https://webdav.yandex.ru ${mnt_folder} davfs rw,users 0 0"
-echo "https://webdav.yandex.ru ${param_login} ${param_pass}"
+apt install davfs2
+mkdir "${mnt_folder}"
+echo "https://webdav.yandex.ru ${mnt_folder} davfs user,rw,_netdev 0 0" >> /etc/fstab
+echo "https://webdav.yandex.ru ${param_login} ${param_pass}" >> /etc/davfs2/secrets
