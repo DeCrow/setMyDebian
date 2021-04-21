@@ -11,6 +11,11 @@ read param_pass
 # Set params
 mnt_folder="/mnt/${param_mnt_name}"
 
+# Update & upgrade
+apt-get update
+apt-get upgrade
+apt-get dist-upgrade
+
 # Install
 apt install davfs2
 mkdir "${mnt_folder}"
