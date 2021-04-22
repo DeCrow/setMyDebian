@@ -25,6 +25,9 @@ timedatectl set-timezone Europe/Moscow
 # Clean MOTD
 > /etc/motd
 
+# Hide interactive screens
+export DEBIAN_FRONTEND=noninteractive
+
 # Set hostname
 echo "$param_hostname" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
@@ -56,7 +59,7 @@ do
    ufw allow from $i to any
 done
 ufw allow $param_ssh_port/tcp
-ufw enable
+ufw enable -y
 
 # Configure knockd
 wget -O /etc/knockd.conf 'https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/knockd.conf'
