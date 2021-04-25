@@ -25,9 +25,6 @@ timedatectl set-timezone Europe/Moscow
 # Clean MOTD
 > /etc/motd
 
-# Hide interactive screens
-export DEBIAN_FRONTEND=noninteractive
-
 # Set hostname
 echo "$param_hostname" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
