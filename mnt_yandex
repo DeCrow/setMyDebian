@@ -16,6 +16,9 @@ apt-get update
 apt-get upgrade
 apt-get dist-upgrade
 
+# Hide interactive screens
+export DEBIAN_FRONTEND=noninteractive
+
 # Install
 apt -y install davfs2
 mkdir "${mnt_folder}"
