@@ -59,7 +59,7 @@ do
    ufw allow from $i to any
 done
 ufw allow $param_ssh_port/tcp
-ufw enable -y
+echo "y" | ufw enable
 
 # Configure knockd
 wget -O /etc/knockd.conf 'https://raw.githubusercontent.com/DeCrow/setMyDebian/main/knockd/knockd.conf'
