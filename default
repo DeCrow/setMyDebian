@@ -5,11 +5,8 @@ echo "Enter new SSH port (not 22):"
 read param_ssh_port
 echo "Enter new hostname:"
 read param_hostname
-echo "Enter you IP:"
-read param_ip_client
-echo "Enter host IP:"
-read param_ip_host
-IFS=', ' read -r -a param_ip_client_arr <<< "$param_ip_client"
+IFS=', ' read -r -a param_ip_client_arr <<< "$SSH_CONNECTION"
+HIP=$(ip addr show |grep 'inet '|grep -v 127.0.0.1 |awk '{print $2}'| cut -d/ -f1)
 
 # Update & upgrade
 apt-get update
@@ -28,7 +25,7 @@ timedatectl set-timezone Europe/Moscow
 # Set hostname
 echo "$param_hostname" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
-echo "$param_ip_host $param_hostname" >> /etc/hosts
+echo "$HIP $param_hostname" >> /etc/hosts
 
 # Set new SSH port
 sed -i "s/#Port 22/Port $param_ssh_port/g" /etc/ssh/sshd_config
