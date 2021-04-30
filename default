@@ -4,8 +4,24 @@
 echo "Enter new SSH port (not 22):"
 read param_ssh_port
 echo "Enter new hostname:"
-read param_hostname
-param_hostip=$(ip addr show |grep 'inet '|grep -v 127.0.0.1 |awk '{print $2}'| cut -d/ -f1)
+read param_host_name
+param_host_ip=$(ip addr show |grep 'inet '|grep -v 127.0.0.1 |awk '{print $2}'| cut -d/ -f1)
+param_cliet_ip=$(echo $SSH_CLIENT | awk '{ print $1}')
+
+# Check params
+echo "SSH port: $param_ssh_port"
+echo "Host name: $param_host_name"
+echo "Host IP: $param_host_ip"
+echo "Client IP: $param_cliet_ip"
+
+while true; do
+    read -p "It is all OK? Can we proceed? [y|n]: " yn
+    case $yn in
+        [Yy]* ) reboot; break;;
+        [Nn]* ) exit;;
+        * ) echo "It is all OK? Can we proceed? [y|n]: ";;
+    esac
+done
 
 # Update & upgrade
 apt-get update
@@ -24,7 +40,7 @@ timedatectl set-timezone Europe/Moscow
 # Set hostname
 echo "$param_hostname" > /etc/hostname
 echo "127.0.0.1 localhost" > /etc/hosts
-echo "$param_hostip $param_hostname" >> /etc/hosts
+echo "$param_host_ip $param_host_name" >> /etc/hosts
 
 # Set new SSH port
 sed -i "s/#Port 22/Port $param_ssh_port/g" /etc/ssh/sshd_config
@@ -47,7 +63,7 @@ sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 sed -i '/ufw-before-input.*icmp/s/ACCEPT/DROP/g' /etc/ufw/before.rules
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow from $SSH_CONNECTION to any
+ufw allow from $param_cliet_ip to any
 ufw allow $param_ssh_port/tcp
 echo "y" | ufw enable
 
