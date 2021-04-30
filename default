@@ -1,18 +1,23 @@
 #!/bin/bash
 
 # Get user params
-echo "Enter new SSH port (not 22):"
-read param_ssh_port
-echo "Enter new hostname:"
-read param_host_name
+read -p "Enter new SSH port (not 22): " param_ssh_port
+read -p "Enter new hostname: " param_host_name
+
+# Set params
 param_host_ip=$(ip addr show |grep 'inet '|grep -v 127.0.0.1 |awk '{print $2}'| cut -d/ -f1)
 param_cliet_ip=$(echo $SSH_CLIENT | awk '{ print $1}')
+cGreen="\e[1;32m"
+cYellow="\e[1;33m"
+cEnd="\e[0m"
 
 # Check params
-echo "SSH port: $param_ssh_port"
-echo "Host name: $param_host_name"
-echo "Host IP: $param_host_ip"
-echo "Client IP: $param_cliet_ip"
+echo "======================================="
+echo -e "${cGreen}SSH port:${cYellow} $param_ssh_port${cEnd}"
+echo -e "${cGreen}Host name:${cYellow} $param_host_name${cEnd}"
+echo -e "${cGreen}Host IP:${cYellow} $param_host_ip${cEnd}"
+echo -e "${cGreen}Client IP:${cYellow} $param_cliet_ip${cEnd}"
+echo "======================================="
 
 while true; do
     read -p "It is all OK? Can we proceed? [y|n]: " yn
