@@ -13,10 +13,10 @@ cEnd="\e[0m"
 
 # Check params
 echo "======================================="
-echo -e "${cGreen}SSH port:${cYellow} $param_ssh_port${cEnd}"
-echo -e "${cGreen}Host name:${cYellow} $param_host_name${cEnd}"
-echo -e "${cGreen}Host IP:${cYellow} $param_host_ip${cEnd}"
-echo -e "${cGreen}Client IP:${cYellow} $param_cliet_ip${cEnd}"
+echo -e "${cGreen}SSH port:  ${cYellow} $param_ssh_port${cEnd}"
+echo -e "${cGreen}Host name: ${cYellow} $param_host_name${cEnd}"
+echo -e "${cGreen}Host IP:   ${cYellow} $param_host_ip${cEnd}"
+echo -e "${cGreen}Client IP: ${cYellow} $param_cliet_ip${cEnd}"
 echo "======================================="
 
 while true; do
