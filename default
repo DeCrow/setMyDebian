@@ -17,7 +17,7 @@ echo "Client IP: $param_cliet_ip"
 while true; do
     read -p "It is all OK? Can we proceed? [y|n]: " yn
     case $yn in
-        [Yy]* ) reboot; break;;
+        [Yy]* ) break;;
         [Nn]* ) exit;;
         * ) echo "It is all OK? Can we proceed? [y|n]: ";;
     esac
