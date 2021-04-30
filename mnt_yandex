@@ -1,12 +1,9 @@
 #!/bin/bash 
 
 # Get user params
-echo "Enter name of folder in mnt:"
-read param_mnt_name
-echo "Enter your Yandex Disk login:"
-read param_login
-echo "Enter your Yandex Disk pass:"
-read param_pass
+read -p "Enter name of folder in mnt:  " param_mnt_name
+read -p "Enter your Yandex Disk login: " param_login
+read -p "Enter your Yandex Disk pass:  " param_pass
 
 # Set params
 mnt_folder="/mnt/${param_mnt_name}"
