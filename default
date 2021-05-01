@@ -68,7 +68,7 @@ sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 sed -i '/ufw-before-input.*icmp/s/ACCEPT/DROP/g' /etc/ufw/before.rules
 ufw default deny incoming
 ufw default allow outgoing
-ufw allow from "${param_cliet_ip}" to any
+ufw allow from "${param_client_ip}" to any
 ufw allow "${param_ssh_port}"/tcp
 echo "y" | ufw enable
 
