@@ -9,9 +9,9 @@ read -p "Enter your Yandex Disk pass:  " param_pass
 mnt_folder="/mnt/${param_mnt_name}"
 
 # Update & upgrade
-apt-get update
-apt-get upgrade
-apt-get dist-upgrade
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
 
 # Hide interactive screens
 export DEBIAN_FRONTEND=noninteractive

@@ -29,9 +29,9 @@ while true; do
 done
 
 # Update & upgrade
-apt-get update
-apt-get upgrade
-apt-get dist-upgrade
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
 
 # Install dependencies
 apt install -y curl fail2ban ufw knockd htop
