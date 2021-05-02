@@ -17,7 +17,7 @@ apt dist-upgrade -y
 export DEBIAN_FRONTEND=noninteractive
 
 # Install
-apt -y install davfs2
+apt -qq -y install davfs2
 mkdir "${mnt_folder}"
 echo "https://webdav.yandex.ru ${mnt_folder} davfs user,rw,nofail,_netdev,file_mode=0777,dir_mode=0777 0 0" >> /etc/fstab
 echo "https://webdav.yandex.ru ${param_login} ${param_pass}" >> /etc/davfs2/secrets

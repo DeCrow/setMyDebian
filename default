@@ -34,7 +34,7 @@ apt upgrade -y
 apt dist-upgrade -y
 
 # Install dependencies
-apt install -y curl fail2ban ufw knockd htop
+apt -qq -y install curl fail2ban ufw knockd htop
 
 # Set timezone
 timedatectl set-timezone Europe/Moscow
