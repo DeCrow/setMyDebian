@@ -29,12 +29,12 @@ while true; do
 done
 
 # Update & upgrade
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
+apt -y update
+apt -y upgrade
+apt -y dist-upgrade
 
 # Install dependencies
-apt -qq -y install curl fail2ban ufw knockd htop
+apt -y install curl fail2ban ufw knockd htop
 
 # Set timezone
 timedatectl set-timezone Europe/Moscow

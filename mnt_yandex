@@ -9,15 +9,15 @@ read -p "Enter your Yandex Disk pass:  " param_pass
 mnt_folder="/mnt/${param_mnt_name}"
 
 # Update & upgrade
-apt update -y
-apt upgrade -y
-apt dist-upgrade -y
+apt -y update
+apt -y upgrade
+apt -y dist-upgrade
 
 # Hide interactive screens
 export DEBIAN_FRONTEND=noninteractive
 
 # Install
-apt -qq -y install davfs2
+apt -y install davfs2
 mkdir "${mnt_folder}"
 echo "https://webdav.yandex.ru ${mnt_folder} davfs user,rw,nofail,_netdev,file_mode=0777,dir_mode=0777 0 0" >> /etc/fstab
 echo "https://webdav.yandex.ru ${param_login} ${param_pass}" >> /etc/davfs2/secrets
