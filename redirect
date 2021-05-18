@@ -1,0 +1,14 @@
+#!/bin/bash 
+
+# Get user params
+read -p "Enter redirect URL: " param_url
+
+# Update & upgrade
+apt -y update
+apt -y upgrade
+apt -y dist-upgrade
+
+# Install
+apt -y install nginx
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/nginx/default" > /etc/nginx/sites-available/default
+service nginx restart
