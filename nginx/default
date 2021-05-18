@@ -3,6 +3,6 @@ server {
 	listen [::]:80 default_server;
 
 	location / {
-		return 301 [URL];
+		return 301 REDIRECT_URL;
 	}
 }
