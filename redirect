@@ -2,6 +2,7 @@
 
 # Get user params
 read -p "Enter redirect URL: " param_url
+param_url=${param_url//\//\\/}
 
 # Update & upgrade
 apt -y update
@@ -11,5 +12,5 @@ apt -y dist-upgrade
 # Install
 apt -y install nginx
 curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/nginx/default" > /etc/nginx/sites-available/default
-sed -i "s/[URL]/${param_url}/g" /etc/nginx/sites-available/default
+sed -i "s/[URL]/${param_url}/g" "/etc/nginx/sites-available/default"
 service nginx restart
