@@ -25,7 +25,7 @@ cd ~/ || exit
 rm -rf /tmp/prometheus
 
 # Create a Prometheus systemd Service unit file
-curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/prometheus/prometheus.service" >> /etc/systemd/system/prometheus.service
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/prometheus/prometheus.service" > /etc/systemd/system/prometheus.service
 
 # Change directory permissions.
 for i in rules rules.d files_sd; do
@@ -38,5 +38,5 @@ chown -R prometheus:prometheus /var/lib/prometheus/
 
 # Reload systemd daemon and start the service
 systemctl daemon-reload
-systemctl start prometheus
 systemctl enable prometheus
+systemctl start prometheus
