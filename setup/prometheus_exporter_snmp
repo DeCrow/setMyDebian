@@ -16,7 +16,7 @@ mv snmp_exporter /usr/local/bin/
 cd ~/ || exit
 rm -rf /tmp/snmp_exporter
 chown prometheus:prometheus /usr/local/bin/snmp_exporter
-curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/prometheus_exporter_snmp/snmp-exporter.service" > /etc/systemd/system/snmp-exporter.service
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/prometheus_exporter_snmp/snmp_exporter.service" > /etc/systemd/system/snmp_exporter.service
 
 # Now start and check the service is running
 systemctl daemon-reload
