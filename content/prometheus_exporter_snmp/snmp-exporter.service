@@ -9,3 +9,4 @@ ExecStart=/usr/local/bin/snmp_exporter --config.file="/usr/local/bin/snmp.yml"
 
 [Install]
 WantedBy=multi-user.target
+
