@@ -13,9 +13,11 @@ curl -s https://api.github.com/repos/prometheus/snmp_exporter/releases/latest|gr
 tar xvf snmp_exporter*.tar.gz
 cd snmp_exporter*/ || exit
 mv snmp_exporter /usr/local/bin/
+mv snmp.yml /etc/prometheus/
 cd ~/ || exit
 rm -rf /tmp/snmp_exporter
 chown prometheus:prometheus /usr/local/bin/snmp_exporter
+chown prometheus:prometheus /etc/prometheus/snmp.yml
 curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/prometheus_exporter_snmp/snmp_exporter.service" > /etc/systemd/system/snmp_exporter.service
 
 # Now start and check the service is running
