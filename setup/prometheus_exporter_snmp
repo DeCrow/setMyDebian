@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Create Prometheus system user / group
+groupadd --system prometheus
+useradd -s /sbin/nologin --system -g prometheus prometheus
+
+# Setup
+apt update
+apt -y install wget tar curl
+mkdir -p /tmp/snmp_exporter
+cd /tmp/snmp_exporter || exit
+curl -s https://api.github.com/repos/prometheus/snmp_exporter/releases/latest|grep browser_download_url|grep linux-amd64|cut -d '"' -f 4|wget -qi -
+tar xvf snmp_exporter*.tar.gz
+cd snmp_exporter*/ || exit
+mv snmp_exporter /usr/local/bin/
+cd ~/ || exit
+rm -rf /tmp/snmp_exporter
+chown prometheus:prometheus /usr/local/bin/snmp_exporter
+curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/prometheus_exporter_snmp/snmp-exporter.service" > /etc/systemd/system/snmp-exporter.service
+
+# Now start and check the service is running
+systemctl daemon-reload
+systemctl start snmp_exporter
+systemctl enable snmp_exporter
