@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# sudo apt -y update && sudo apt -y upgrade && sudo apt -y install ufw && sudo reboot
+# sudo wget "https://raw.githubusercontent.com/DeCrow/setMyRasPortainer/main/setup" -O setup && sudo -E bash setup
+
 # Colors param
 cEnd="\e[0m"
 cGreen="\e[1;32m"
