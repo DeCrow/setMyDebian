@@ -3,6 +3,7 @@
 apt update
 apt -y install wget tar curl
 mkdir -p /opt/grafana_mimir/conf
+mkdir /tmp/grafana_mimir
 useradd --no-create-home --shell /bin/false grafana
 cd /opt/grafana_mimir || exit
 curl -s https://api.github.com/repos/grafana/mimir/releases/latest|grep browser_download_url|grep mimir-linux-amd64|grep -v sha|cut -d '"' -f 4|wget -qi - -O mimir
