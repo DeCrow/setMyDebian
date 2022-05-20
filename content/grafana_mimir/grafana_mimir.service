@@ -1,0 +1,11 @@
+[Unit]
+Description=Grafana Mimir Service
+After=network.target
+
+[Service]
+Type=simple
+User=grafana
+ExecStart=/opt/grafana_mimir/mimir --config.file="/opt/grafana_mimir/conf/default.yaml"
+
+[Install]
+WantedBy=multi-user.target
