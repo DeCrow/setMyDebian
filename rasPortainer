@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# sudo apt -y update && sudo apt -y upgrade && sudo apt -y install ufw && sudo reboot
+# sudo wget "https://raw.githubusercontent.com/DeCrow/setMyRasPortainer/main/setup" -O setup && sudo -E bash setup
+
+# Colors param
+cEnd="\e[0m"
+cGreen="\e[1;32m"
+cYellow="\e[1;33m"
+
+# Read user params
+read -r -p "Enter non-root user name: " bs_user
+read -r -p "Enter new host name to set: " bs_hostname
+read -r -p "Enter new SSH port (not 22): " bs_sshport
+
+# Script params
+bs_clientip=$(echo "$SSH_CLIENT" | awk '{ print $1}')
+bs_hostip="$(ip addr show |grep 'inet '|grep -v 127.0.0.1 |awk '{print $2}'| cut -d/ -f1)"
+bs_bscriptlink="https://raw.githubusercontent.com/DeCrow/setMyDebian/main/default"
+
+# Docker params
+dk_pport="9000"
+dk_dlink="https://get.docker.com"
+
+# Show all params to client
+echo "===================================================================================================="
+echo -e "${cGreen}User name:           ${cYellow} ${bs_user}${cEnd}"
+echo -e "${cGreen}Host name:           ${cYellow} ${bs_hostname}${cEnd}"
+echo -e "${cGreen}SSH port:            ${cYellow} ${bs_sshport}${cEnd}"
+echo -e "${cGreen}Client IP:           ${cYellow} ${bs_clientip}${cEnd}"
+echo -e "${cGreen}Host IP:             ${cYellow} ${bs_hostip}${cEnd}"
+echo -e "${cGreen}Base script link:    ${cYellow} ${bs_bscriptlink}${cEnd}"
+echo "===================================================================================================="
+echo -e "${cGreen}Portainer port:      ${cYellow} ${dk_pport}${cEnd}"
+echo -e "${cGreen}Docker down link:    ${cYellow} ${dk_dlink}${cEnd}"
+echo "===================================================================================================="
+
+# Question to go
+while true; do
+    read -r -p "It is all OK? Can we proceed? [y|n]: " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "It is all OK? Can we proceed? [y|n]: ";;
+    esac
+done
+
+# Prepare Debian
+wget "${bs_bscriptlink}" -O basescript
+printf "%s\n%s\ny\n" "${bs_sshport}" "${bs_hostname}" | bash basescript
+rm basescript
+
+# Open server ports in firewall
+ufw allow ${dk_pport}/tcp
+
+# Setup Docker
+curl -sSL ${dk_dlink} | sh
+usermod -aG docker "${bs_user}"
+
+# Setup Portainer
+docker pull portainer/portainer-ce:linux-arm64
+docker run -d -p ${dk_pport}:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:linux-arm64
+
+# Question to reboot
+while true; do
+    read -r -p "It is all OK? Can we reboot? [y|n]: " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* ) exit;;
+        * ) echo "It is all OK? Can we reboot? [y|n]: ";;
+    esac
+done
+
+reboot
