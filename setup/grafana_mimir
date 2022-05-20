@@ -6,7 +6,7 @@ mkdir -p /opt/grafana_mimir/conf
 useradd --no-create-home --shell /bin/false grafana
 cd /opt/grafana_mimir || exit
 curl -s https://api.github.com/repos/grafana/mimir/releases/latest|grep browser_download_url|grep mimir-linux-amd64|grep -v sha|cut -d '"' -f 4|wget -qi - -O mimir
-chown grafana:grafana /opt/grafana_mimir
+chown grafana:grafana -R /opt/grafana_mimir
 chmod +x /opt/grafana_mimir/mimir
 cd ~/ || exit
 
@@ -15,5 +15,5 @@ curl "https://raw.githubusercontent.com/DeCrow/setMyDebian/main/content/grafana_
 
 # Now start and check the service is running
 systemctl daemon-reload
-systemctl start node_exporter
-systemctl enable node_exporter
+systemctl start grafana_mimir
+systemctl enable grafana_mimir
